@@ -1,17 +1,55 @@
-
-
 <html>
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <head>
 <style>
-table{
-  border-style:solid;
-  border-width:2px;
-  border-color:pink;
+h1{
+  text-align: center;
 }
+table{
+  border: 3px solid pink;
+  padding: 3px;
+  border-radius: 2%;
+}
+.tables{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.table1{
+  margin-right: 10px;
+}
+.table2{
+  margin-left: 10px;
+  align-self: bottom;
+}
+th{
+  padding: 0px 10px;
+}
+td{
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  table{
+    width: 90%;
+    margin: auto;
+  }
+  .tables{
+    display: block;
+    justify-content: center;
+  }
+  .table1{
+    margin: auto;
+  }
+  .table2{
+    margin: 10px auto;
+  }
+}
+
 </style>
 </head>
 <body bgcolor="#EEFDEF">
-  <h1>Testing Table</h1>
+  <h1>Units</h1>
 <?php
 
 $url = 'https://api.sightmap.com/v1/assets/1273/multifamily/units';
@@ -28,20 +66,24 @@ curl_setopt($curl, CURLOPT_HTTPHEADER, [
 $response = json_decode(curl_exec($curl));
 curl_close($curl);
 
-// echo $response . PHP_EOL;
+$area1 = [];
 
-// while($response) {
-//   echo "<tr>";
-//   echo "<td>".$response["id"]."</td>";
-//   echo "</td>";
-// }
+$areaGreater = [];
 
-echo "<table>";
+foreach ($response->data as $unit) {
+  if($unit->area > 1) {
+    array_push($areaGreater, $unit);
+  } else {
+    array_push($area1, $unit);
+  }
+}
+
+echo "<div class='tables'>";
+echo "<table class='table1'>";
 echo "<th> Unit Number </th>";
 echo "<th> Area </th>";
 echo "<th> Updated At </th>";
-  foreach ($response->data as $unit) {
-    // echo $unit->id;
+  foreach ($areaGreater as $unit) {
     echo "<tr>";
       echo "<td>".$unit->unit_number."</td>";
       echo "<td>".$unit->area."</td>";
@@ -49,6 +91,21 @@ echo "<th> Updated At </th>";
     echo "</tr>";
   }
 echo "</table>";
+
+echo "<table class='table2'>";
+echo "<th> Unit Number </th>";
+echo "<th> Area </th>";
+echo "<th> Updated At </th>";
+foreach ($area1 as $unit) {
+  echo "<tr>";
+  echo "<td>".$unit->unit_number."</td>";
+  echo "<td>".$unit->area."</td>";
+  echo "<td>".date("m-d-y, g:i", $unit->updated_at)."</td>";
+  echo "</tr>";
+}
+echo "</table>";
+echo "</div>";
+
 
 ?>
 </body>
