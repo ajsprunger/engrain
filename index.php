@@ -79,31 +79,31 @@ foreach ($response->data as $unit) {
 }
 
 echo "<div class='tables'>";
-echo "<table class='table1'>";
-echo "<th> Unit Number </th>";
-echo "<th> Area </th>";
-echo "<th> Updated At </th>";
-  foreach ($areaGreater as $unit) {
-    echo "<tr>";
+  echo "<table class='table1'>";
+    echo "<th> Unit Number </th>";
+    echo "<th> Area </th>";
+    echo "<th> Updated At </th>";
+    foreach ($areaGreater as $unit) {
+      echo "<tr>";
+        echo "<td>".$unit->unit_number."</td>";
+        echo "<td>".$unit->area."</td>";
+        echo "<td>".date("m-d-y, g:i", $unit->updated_at)."</td>";
+      echo "</tr>";
+    }
+  echo "</table>";
+
+echo "<table class='table2'>";
+  echo "<th> Unit Number </th>";
+    echo "<th> Area </th>";
+    echo "<th> Updated At </th>";
+    foreach ($area1 as $unit) {
+      echo "<tr>";
       echo "<td>".$unit->unit_number."</td>";
       echo "<td>".$unit->area."</td>";
       echo "<td>".date("m-d-y, g:i", $unit->updated_at)."</td>";
-    echo "</tr>";
-  }
-echo "</table>";
-
-echo "<table class='table2'>";
-echo "<th> Unit Number </th>";
-echo "<th> Area </th>";
-echo "<th> Updated At </th>";
-foreach ($area1 as $unit) {
-  echo "<tr>";
-  echo "<td>".$unit->unit_number."</td>";
-  echo "<td>".$unit->area."</td>";
-  echo "<td>".date("m-d-y, g:i", $unit->updated_at)."</td>";
-  echo "</tr>";
-}
-echo "</table>";
+      echo "</tr>";
+    }
+  echo "</table>";
 echo "</div>";
 
 
